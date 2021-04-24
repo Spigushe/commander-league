@@ -6,4 +6,11 @@
 */venv/
 
 # Discord Bot
-league-bot/.env
+.env
+quickstart.py
+credentials*
+token*
+
+# Python files
+__pycache__/
+*/*.egg-info/
