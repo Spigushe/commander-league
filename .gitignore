@@ -1,0 +1,9 @@
+# MacOS files
+.DS_Store
+*/.DS_Store
+
+# Virtual Environment
+*/venv/
+
+# Discord Bot
+league-bot/.env

@@ -1,27 +1,79 @@
 # CommanderLeague
 Web App for the Commander League
 
-## Technology Used
-We use the following technologies to manage the App:
-- PHP >= 7.4
-- HTML5
-- CSS3
-- MySQL >= 5.7
+## Stack
+The Commander League is using different stacks depending on the tools
 
-## Objectives of the Development
-What we want to bring to the users are:
-- Handling of MtG tournaments
-- Handling of match results
-- Creation of decklists
-- Registration to tournaments
+### Frontend
+Uses the following stack to serve UI:
+```
+   ReactJS - framework
+   Bootstrap - components
+   Stylus - CSS
+```
 
-Those services will have a detailed description in separate files
+### Backend
+Performs search in official VTES card database and stores account/decks/inventory with:
 
-## Licence
-The Web App is developed under MIT Licence
+```
+   Flask - framework
+   SQLite - database
+```
+### Discord Bot
+```
+    Python - language
+    Discord.Py - library
+    GoogleAPI - library
+```
 
-## Versioning
-This repository will follow the `MAJOR.MINOR.PATCH` system:
-- `MAJOR` is the evolution of the API
-- `MINOR` is the development of one the main features
-- `PATCH` is the fix of the feature
+## Special Thanks
+We'd like to thank the follow person for their help throughout the development of the App:
+- Zankou for designing the skeleton of the Discord Bot currently use
+
+## Installation
+
+### Local Deployment (on Linux)
+
+Below is local deployment for self-usage/development only!
+
+```
+    git clone https://github.com/Spigushe/commander-league.git
+    cd commander-league
+```
+
+Start backend:
+```
+    cd flask-backend
+    python -m venv venv
+    source venv/bin/activate
+    pip install -e ".[dev]"
+    backend
+```
+
+Start frontend:
+```
+    cd react-frontend
+    npm install
+    parcel serve index.html
+```
+
+Start discord bot:
+```
+    cd discord-bot
+	python -m venv venv
+	source venv/bin/activate
+    pip install -e ".[dev]"
+	league-bot
+```
+
+### Production Deployment
+
+For production you should at least:
+* setup web-server (we use `nginx`) instead of `parcel` embedded web-server
+* setup wsgi-server (we use `gunicorn`) instead of `flask` embedded web-server
+* build frontend for production (see your prefered bundler documentation, for `parcel` use `parcel build index.html`)
+* change `app.config['SECRET_KEY']` in `config.py`
+
+## LICENSE
+
+MIT
