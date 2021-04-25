@@ -93,3 +93,23 @@ def PhraseReponse(arg): #Dictionnaire de réponse du bot
 
 	# Cas par défaut
 	return "⚠️ Je ne sais pas ce que je dois dire"
+
+
+dicMessage = {
+	# Member voting phrases
+	'vote-macrotype': """🤖 **Bip, Boup**
+⚠️ I was not able to handle the macrotype you've given me
+✉️ Can you react to the right one, please ?
+1️⃣ Aggro     2️⃣ Tempo     3️⃣ Control   4️⃣ Combo     5️⃣ Midrange""",
+	'vote-error': "❌ The reaction you just used has raised an error. Please reach out to a staff member to get some help",
+	'vote-success': "Thank you for your input, I have taken appropriate measures",
+
+	# Registration phrases
+	'registration-complete': "✅ You have been successfully registered !",
+	'registration-registered': "❌ You are already registered, please use this command only once",
+	'registration-full': "🤖 **Bip, Boup**\nThe event is full, I'll check if I can add you to the waiting list",
+	'registration-ok': "📝 **New Registration**\nMaster Table has been updated\nMessage content: ",
+	'registration-missing': "❌ There are some required information that you did not give us. Please refer to `!help register` for the full command and details about the arguments",
+	'registration-disabled': "❌ Registration are closed for all of our event for now",
+	'registration-bad-argument': "❌ The arguments used do not fit with what I've been programmed for. Please reach out to a staff member to get som help",
+}

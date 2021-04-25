@@ -259,7 +259,7 @@ async def registration(ctx, *, args: parser.registration=parser.registration.def
 	)
 
 @registration.error
-async def Inscription_error(ctx, error):
+async def registration_error(ctx, error):
 	#await EffacerMessage(ctx.message)
 	if isinstance(error, discord.ext.commands.errors.MissingRequiredArgument):
 		await sendMessage(ctx.author,dicMessage['registration-missing'])
