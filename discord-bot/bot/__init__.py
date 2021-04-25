@@ -262,26 +262,18 @@ async def registration(ctx, *, args: parser.registration=parser.registration.def
 async def Inscription_error(ctx, error):
 	#await EffacerMessage(ctx.message)
 	if isinstance(error, discord.ext.commands.errors.MissingRequiredArgument):
-		await sendMessage(
-			getChannel(BOTRETOURGENERAL),
-			(
-				f"❌ **Error during registration for **{ctx.message.author}**\nMessage content:"
-				+ f"```{ctx.message}```"
-			)
-		)
-		return await sendMessage(ctx.author,dicMessage['registration-missing'])
+		await sendMessage(ctx.author,dicMessage['registration-missing'])
 	if isinstance(error, discord.ext.commands.DisabledCommand):
 		return await sendMessage(ctx.author,dicMessage['registration-disabled'])
 	if isinstance(error, discord.ext.commands.errors.BadArgument):
-		await sendMessage(
-			getChannel(BOTRETOURGENERAL),
-			(
-				f"❌ **Error during registration for **{ctx.message.author}**\nMessage content:"
-				+ f"```{ctx.message}```"
-			)
+		await sendMessage(ctx.author,dicMessage['registration-bad-argument'])
+	return await sendMessage(
+		getChannel(BOTRETOURGENERAL),
+		(
+			f"❌ **Error during registration for **{ctx.message.author}**\nMessage content:"
+			+ f"```{ctx.message}```"
 		)
-		return await sendMessage(ctx.author,dicMessage['registration-bad-argument'])
-
+	)
 
 
 def main():
