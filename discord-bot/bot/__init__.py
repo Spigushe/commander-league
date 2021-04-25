@@ -258,7 +258,6 @@ async def registration(ctx, *, args: parser.registration=parser.registration.def
 		dicMessage['registration-ok']+"`"+ctx.message.content+"`\nUser: **"+args['nickname']+"**"
 	)
 
-"""
 @registration.error
 async def Inscription_error(ctx, error):
 	#await EffacerMessage(ctx.message)
@@ -275,7 +274,6 @@ async def Inscription_error(ctx, error):
 			+ f"```{ctx.message.content}```"
 		)
 	)
-"""
 
 def main():
 	"""Entrypoint for the Discord Bot"""
