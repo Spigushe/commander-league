@@ -219,13 +219,14 @@ async def registration(ctx, *, args: parser.registration=parser.registration.def
 	await sendMessage(member, dicMessage[reg['msg']])
 	# automatically registered if a seat is available
 
+	wl = {'status':'','msg':''}
 	if reg['msg'] == 'registration-full':
 		wl = registrering(
 			event, 'ListedAttente',
 			member, args["nickname"], args["hash"], args["link"], ""
 		)
 		await sendMessage(member, dicMessage[wl['msg']])
-	if reg['msg'] == 'registration-complete' or (wl['msg'] and wl['msg'] == 'registration-complete'):
+	if reg['msg'] == 'registration-complete' or wl['msg'] == 'registration-complete':
 		for role in getLeague().roles:
 			if role.name == event["NomRole"]:
 				await member.add_roles(role)
@@ -257,7 +258,7 @@ async def registration(ctx, *, args: parser.registration=parser.registration.def
 		dicMessage['registration-ok']+"`"+ctx.message.content+"`\nUser: **"+args['nickname']+"**"
 	)
 
-
+"""
 @registration.error
 async def Inscription_error(ctx, error):
 	#await EffacerMessage(ctx.message)
@@ -271,10 +272,10 @@ async def Inscription_error(ctx, error):
 		getChannel(BOTRETOURGENERAL),
 		(
 			f"❌ **Error during registration for **{ctx.message.author}**\nMessage content:"
-			+ f"```{ctx.message}```"
+			+ f"```{ctx.message.content}```"
 		)
 	)
-
+"""
 
 def main():
 	"""Entrypoint for the Discord Bot"""
