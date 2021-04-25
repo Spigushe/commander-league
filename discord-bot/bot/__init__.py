@@ -66,6 +66,7 @@ dicMessage = {
 ✉️ Can you react to the right one, please ?
 1️⃣ Aggro     2️⃣ Tempo     3️⃣ Control   4️⃣ Combo     5️⃣ Midrange""",
 	'vote-error': "❌ The reaction you just used has raised an error. Please reach out to a staff member to get some help",
+	'vote-success': "✅ Thank you for your input",
 
 	# Registration phrases
 	'registration-complete': "✅ You have been successfully registered !",
@@ -126,7 +127,7 @@ async def memberVote(member, message: str, options: int):
 	message = await member.fetch_message(message.id)
 	for reaction in message.reactions:
 		if reaction.count == 2:
-			logger.info(f"Emoji selected: {reaction.emoji}")
+			await sendMessage(member, dicMessage['vote-success'])
 			return SELECTION_EMOJIS[str(reaction.emoji)]
 
 	# If a reaction is misinterpreted
@@ -236,7 +237,7 @@ async def registration(ctx, *, args: parser.registration=parser.registration.def
 	"""
 	if args["macrotype"] != "" and args["macrotype"].lower() not in macrotypes:
 		macrotype = await memberVote(member, dicMessage['vote-macrotype'], 5)
-		args["macrotype"] = macrotypes[macrotype]
+		args["macrotype"] = macrotypes[macrotype-1]
 	if reg['msg'] == 'registration-complete':
 		list = 'ListeInscrit'
 	elif wl['msg'] == 'registration-complete':
