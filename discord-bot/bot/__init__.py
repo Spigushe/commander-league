@@ -218,9 +218,6 @@ async def registration(ctx, *, args: parser.registration=parser.registration.def
 	await sendMessage(member, dicMessage[reg['msg']])
 	# automatically registered if a seat is available
 
-	if reg['msg'] == 'registration-registered':
-		# Already Registered
-		return
 	if reg['msg'] == 'registration-complete':
 		for role in getLeague().roles:
 			if role.name == event["NomRole"]:
@@ -231,6 +228,8 @@ async def registration(ctx, *, args: parser.registration=parser.registration.def
 			member, args["nickname"], args["hash"], args["link"], ""
 		)
 		await sendMessage(member, dicMessage[wl['msg']])
+	if reg['msg'] == 'registration-registered' or wl['msg'] == 'registration-registered':
+		return
 
 	"""
 	Checking and updating macrotype
