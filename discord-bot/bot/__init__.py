@@ -219,16 +219,16 @@ async def registration(ctx, *, args: parser.registration=parser.registration.def
 	await sendMessage(member, dicMessage[reg['msg']])
 	# automatically registered if a seat is available
 
-	if reg['msg'] == 'registration-complete':
-		for role in getLeague().roles:
-			if role.name == event["NomRole"]:
-				await Auteur.add_roles(role)
 	if reg['msg'] == 'registration-full':
 		wl = registrering(
 			event, 'ListedAttente',
 			member, args["nickname"], args["hash"], args["link"], ""
 		)
 		await sendMessage(member, dicMessage[wl['msg']])
+	if reg['msg'] == 'registration-complete' or (wl['msg'] and wl['msg'] == 'registration-complete'):
+		for role in getLeague().roles:
+			if role.name == event["NomRole"]:
+				await member.add_roles(role)
 	if reg['msg'] == 'registration-registered' or wl['msg'] == 'registration-registered':
 		return
 
@@ -254,7 +254,7 @@ async def registration(ctx, *, args: parser.registration=parser.registration.def
 	"""
 	await sendMessage(
 		getChannel(event["bot-channel"]),
-		dicMessage['registration-ok']+"```"+ctx.message+"```"
+		dicMessage['registration-ok']+"`"+ctx.message.content+"`\nUser: **"+args['nickname']+"**"
 	)
 
 
