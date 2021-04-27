@@ -60,6 +60,10 @@ SELECTION_EMOJIS = collections.OrderedDict(
 macrotypes = ["aggro", "tempo", "control", "combo", "midrange", "agro","controle", "midrang"]
 
 dicMessage = {
+	# General phrases
+	'check-error': "❌ You do not have the required Privileges",
+	'cmd-disabled': "❌ The command is not active currently",
+
 	# Member voting phrases
 	'vote-macrotype': """🤖 **Bip, Boup**
 ⚠️ I was not able to handle the macrotype you've given me
@@ -74,8 +78,13 @@ dicMessage = {
 	'registration-full': "🤖 **Bip, Boup**\nThe event is full, I'll check if I can add you to the waiting list",
 	'registration-ok': "📝 **New Registration**\nMaster Table has been updated\nMessage content: ",
 	'registration-missing': "❌ There are some required information that you did not give us. Please refer to `!help register` for the full command and details about the arguments",
-	'registration-disabled': "❌ Registration are closed for all of our event for now",
+	'registration-disabled': "❌ Registration are closed for all of our events for now",
 	'registration-bad-argument': "❌ The arguments used do not fit with what I've been programmed for. Please reach out to a staff member to get som help",
+
+	# Registration management phrases
+	'open-success': "🟢 Registrations for the following event are activated: ",
+	'open-pb-argument': "❌ The argument used do not fit main, side or fun event",
+	'close-event': "🟢 Registrations for the following event are disabled: ",
 }
 
 
@@ -106,6 +115,12 @@ def getEvent(key: str):
 	}
 	return table[key]
 
+
+def is_admin(ctx):
+	for role in getMember(ctx).roles:
+		if role.permissions.administrator:
+			return True
+	return False
 
 
 
@@ -192,20 +207,96 @@ async def on_ready():
 	logger.info("Logged in as {}", bot.user)
 	await bot.change_presence(activity=discord.Game(name="Duel Commander"))
 
+
+@bot.command(
+	name="open",
+	help="Open registration for said event (either main, side or fun)",
+	hidden=True,
+)
+@commands.check(is_admin)
+async def openRegistration(ctx, arg:str):
+	logger.info("Recieved command: {m}".format(m=ctx.message.content))
+	events = { 'mai': 'Main Event', 'sid': 'Side Event', 'fun': 'Fun Event' }
+	if arg.lower()[:3] in events.keys():
+		await deleteMessage(ctx.message)
+		await sendMessage(
+			getChannel(BOTRETOURGENERAL),
+			dicMessage['open-success']+"**"+events[arg.lower()[:3]]+"**"
+		)
+		registration.update(enabled=True)
+		closeRegistration.update(enabled=True)
+		return openRegistration.update(enabled=False,aliases=[events[arg.lower()[:3]]])
+	raise discord.ext.commands.errors.BadArgument
+
+@openRegistration.error
+async def openRegistration_error(ctx, error):
+	await deleteMessage(ctx.message)
+	if isinstance(error, discord.ext.commands.errors.BadArgument):
+		return await sendMessage(getChannel(BOTRETOURGENERAL),dicMessage['open-pb-argument'])
+	if isinstance(error, discord.ext.commands.errors.MissingRequiredArgument):
+		return await sendMessage(getChannel(BOTRETOURGENERAL),dicMessage['open-pb-argument'])
+	if isinstance(error, discord.ext.commands.DisabledCommand):
+		return await sendMessage(ctx.author,dicMessage['cmd-disabled'])
+	if isinstance(error, discord.ext.commands.CheckFailure):
+		return await sendMessage(ctx.author,dicMessage['check-error'])
+	return await sendMessage(
+		getChannel(BOTRETOURGENERAL),
+		(
+			f"❌ Error during command handling for **{ctx.message.author}**\nMessage content:"
+			+ f"```{ctx.message.content}```"
+		)
+	)
+
+
+@bot.command(
+	name="close",
+	help="Close registration for said event (either main, side or fun)",
+	hidden=True,
+	enabled=False,
+)
+@commands.check(is_admin)
+async def closeRegistration(ctx):
+	logger.info("Recieved command: {m}".format(m=ctx.message.content))
+	await deleteMessage(ctx.message)
+	event = openRegistration.aliases[0]
+
+	openRegistration.update(aliases=[],enabled=True)
+	closeRegistration.update(enabled=False)
+	registration.update(enabled=False)
+
+	return await sendMessage(
+		getChannel(BOTRETOURGENERAL),
+		dicMessage['close-event']+"**"+event+"**"
+	)
+
+@closeRegistration.error
+async def closeRegistration_error(ctx, error):
+	await deleteMessage(ctx.message)
+	if isinstance(error, discord.ext.commands.DisabledCommand):
+		return await sendMessage(ctx.author,dicMessage['cmd-disabled'])
+	if isinstance(error, discord.ext.commands.CheckFailure):
+		return await sendMessage(ctx.author,dicMessage['check-error'])
+	return await sendMessage(
+		getChannel(BOTRETOURGENERAL),
+		(
+			f"❌ Error during command handling for **{ctx.message.author}**\nMessage content:"
+			+ f"```{ctx.message.content}```"
+		)
+	)
+
 @bot.command(
 	name="register",
-	#aliases=["inscription"],
+	aliases=["inscription"],
 	brief="Register a player to an event",
 	help="Register a player into an open-for-registration tournament with a Cockatrice nickname, the deck's hash from Cockatrice and a Moxfield link to the decklist",
 	usage="nickname=player_nickname hash=deck_hash link=deck_link",
-	#enabled=False
+	enabled=False,
 )
 async def registration(ctx, *, args: parser.registration=parser.registration.defaults()):
 	logger.info("Recieved command: {m}".format(m=ctx.message.content))
 	await deleteMessage(ctx.message)
 
-	#event = getEvent(Ouverture.aliases[0])
-	event = getEvent("Main Event")
+	event = getEvent(openRegistration.aliases[0])
 	member = getMember(ctx)
 
 	"""
@@ -260,8 +351,8 @@ async def registration(ctx, *, args: parser.registration=parser.registration.def
 
 @registration.error
 async def registration_error(ctx, error):
-	#await EffacerMessage(ctx.message)
-	if isinstance(error, discord.ext.commands.errors.MissingRequiredArgument):
+	await deleteMessage(ctx.message)
+	if isinstance(error, discord.ext.commands.errors.CommandInvokeError):
 		await sendMessage(ctx.author,dicMessage['registration-missing'])
 	if isinstance(error, discord.ext.commands.DisabledCommand):
 		return await sendMessage(ctx.author,dicMessage['registration-disabled'])
@@ -270,7 +361,7 @@ async def registration_error(ctx, error):
 	return await sendMessage(
 		getChannel(BOTRETOURGENERAL),
 		(
-			f"❌ **Error during registration for **{ctx.message.author}**\nMessage content:"
+			f"❌ Error during registration for **{ctx.message.author}**\nMessage content:"
 			+ f"```{ctx.message.content}```"
 		)
 	)
