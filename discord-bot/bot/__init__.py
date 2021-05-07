@@ -101,7 +101,8 @@ def getChannel(id):
 def getMember(ctx):
 	"""Get member if message.author is a guild.member"""
 	for member in getLeague().members:
-		if member.id == ctx.author.id: return member
+		if member.id == ctx.author.id:
+			return member
 
 def getTable(range):
 	"""GSuite procedure to manage Spreadsheets"""
@@ -188,8 +189,6 @@ def registrering (event, list, member, nickname, hash, link, macrotype: str = "0
 		if line[0] == str(member.id):
 			return { 'status': 'error', 'msg': 'registration-registered' }
 		if line[0] == "":
-			#line = [str(member.id), nickname, hash, link, macrotype, "0"]
-			# the "0" is there to indicate the end of line using GSuite API
 			line[0] = str(member.id)
 			line[1] = nickname
 			line[2] = hash
@@ -215,7 +214,7 @@ async def on_ready():
 )
 @commands.check(is_admin)
 async def openRegistration(ctx, arg:str):
-	logger.info("Recieved command: {m}".format(m=ctx.message.content))
+	logger.info("Received command: {m}".format(m=ctx.message.content))
 	events = { 'mai': 'Main Event', 'sid': 'Side Event', 'fun': 'Fun Event' }
 	if arg.lower()[:3] in events.keys():
 		await deleteMessage(ctx.message)
@@ -256,7 +255,7 @@ async def openRegistration_error(ctx, error):
 )
 @commands.check(is_admin)
 async def closeRegistration(ctx):
-	logger.info("Recieved command: {m}".format(m=ctx.message.content))
+	logger.info("Received command: {m}".format(m=ctx.message.content))
 	await deleteMessage(ctx.message)
 	event = openRegistration.aliases[0]
 
@@ -293,7 +292,7 @@ async def closeRegistration_error(ctx, error):
 	enabled=False,
 )
 async def registration(ctx, *, args: parser.registration=parser.registration.defaults()):
-	logger.info("Recieved command: {m}".format(m=ctx.message.content))
+	logger.info("Received command: {m}".format(m=ctx.message.content))
 	await deleteMessage(ctx.message)
 
 	event = getEvent(openRegistration.aliases[0])
