@@ -57,8 +57,6 @@ SELECTION_EMOJIS = collections.OrderedDict(
 	]
 )
 
-macrotypes = ["aggro", "tempo", "control", "combo", "midrange", "agro","controle", "midrang"]
-
 dicMessage = {
 	# General phrases
 	'check-error': "❌ You do not have the required Privileges",
@@ -326,6 +324,7 @@ async def registration(ctx, *, args: parser.registration=parser.registration.def
 	"""
 	Checking and updating macrotype
 	"""
+	macrotypes = ["aggro", "tempo", "control", "combo", "midrange", "agro", "controle", "midrang"]
 	if args["macrotype"] != "" and args["macrotype"].lower() not in macrotypes:
 		macrotype = await memberVote(member, dicMessage['vote-macrotype'], 5)
 		args["macrotype"] = macrotypes[macrotype-1]
