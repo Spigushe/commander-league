@@ -134,7 +134,7 @@ async def memberVote(member, message: str, options: int):
 		logger.warning("Missing reaction permission")
 
 	def check(reaction, user):
-		return user == member and str(reaction.emoji) in SELECTION_EMOJIS
+		return user == member and str(reaction.emoji) in SELECTION_EMOJIS and reaction.count == 2
 	reaction, user = await bot.wait_for('reaction_add', check=check)
 
 	#Recuperation du message envoyé et de la réaction en double associé
