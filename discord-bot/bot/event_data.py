@@ -9,8 +9,8 @@ MAINEVENT1 = {
 	"ListeScore": "S3_ME!W4:X170",
 	"ListeInscrit": "S3_ME!P4:U51",
 	"ListedAttente": "S3_ME!P52:U170",
-	"bot-channel": 833664664012718090,
-	"Categorie": 823186086960037899,
+	"bot-channel": 848664401069867088,
+	"Categorie": 702453004179079248,
 	"NomRole": "MainEvent"
 }
 SIDEEVENT1 = {
@@ -18,8 +18,8 @@ SIDEEVENT1 = {
 	"ListeScore": "S3_SE!W4:X110",
 	"ListeInscrit": "S3_SE!P4:U27",
 	"ListedAttente": "S3_SE!P28:U110",
-	"bot-channel": 823191678826971196,
-	"Categorie": 823186192836722718,
+	"bot-channel": 848664537355386890,
+	"Categorie": 805195339803131914,
 	"NomRole": "SideEvent"
 }
 FUNEVENT1 = {
@@ -27,8 +27,8 @@ FUNEVENT1 = {
 	"ListeScore": "S3_FE!W4:X66",
 	"ListeInscrit": "S3_FE!P4:U23",
 	"ListedAttente": "S3_FE!P24:U66",
-	"bot-channel": 823191704827723826,
-	"Categorie": 823186631385153576,
+	"bot-channel": 848664935332446228,
+	"Categorie": 810987751117815838,
 	"NomRole": "FunEvent"
 }
 MAINEVENT2 = {
@@ -36,8 +36,8 @@ MAINEVENT2 = {
 	"ListeScore": "S4_ME!W4:X170",
 	"ListeInscrit": "S4_ME!P4:U51",
 	"ListedAttente": "S4_ME!P52:U170",
-	"bot-channel": 833664664012718090,
-	"Categorie": 823186086960037899,
+	"bot-channel": 848664401069867088,
+	"Categorie": 702453004179079248,
 	"NomRole": "MainEvent"
 }
 SIDEEVENT2 = {
@@ -45,8 +45,8 @@ SIDEEVENT2 = {
 	"ListeScore": "S4_SE!W4:X110",
 	"ListeInscrit": "S4_SE!P4:U27",
 	"ListedAttente": "S4_SE!P28:U110",
-	"bot-channel": 823191678826971196,
-	"Categorie": 823186192836722718,
+	"bot-channel": 848664537355386890,
+	"Categorie": 805195339803131914,
 	"NomRole": "SideEvent"
 }
 FUNEVENT2 = {
@@ -54,10 +54,10 @@ FUNEVENT2 = {
 	"ListeScore": "S4_FE!W4:X66",
 	"ListeInscrit": "S4_FE!P4:U23",
 	"ListedAttente": "S4_FE!P24:U66",
-	"bot-channel": 823191704827723826,
-	"Categorie": 823186631385153576,
+	"bot-channel": 848664935332446228,
+	"Categorie": 810987751117815838,
 	"NomRole": "FunEvent"
 }
-MAINEVENT = MAINEVENT1
-SIDEEVENT = SIDEEVENT1
-FUNEVENT = FUNEVENT1
+MAINEVENT = MAINEVENT2
+SIDEEVENT = SIDEEVENT2
+FUNEVENT = FUNEVENT2
