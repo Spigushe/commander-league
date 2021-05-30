@@ -1,6 +1,7 @@
 include LICENSE README.md CHANGELOG.rst
 
 exclude Makefile
+exclude .markdownlint.json
 exclude *0.py
 
 global-exclude */__pycache__/*
