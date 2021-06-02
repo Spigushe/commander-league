@@ -1,7 +1,7 @@
 Changelog
 =========
 
-0.2 (unreleased)
+1.0 (2021-06-02)
 ----------------
 
 - Nothing changed yet.
